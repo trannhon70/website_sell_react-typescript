@@ -1,7 +1,7 @@
-import { getApp, getApps, initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-
+import { getAuth } from "firebase/auth";
 const firebaseConfig = {
   apiKey: "AIzaSyB3fsgbSvH0hIFZTM8sKZGnca8-gZeyPF4",
   authDomain: "websitesell-602f5.firebaseapp.com",
@@ -12,7 +12,8 @@ const firebaseConfig = {
   appId: "1:1092468165265:web:14062b86e96802b52acd30",
 };
 
-const app = getApps.length > 0 ? getApp() : initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const firestore = getFirestore(app);
 const storege = getStorage(app);
-export { app, firestore, storege };
+export { auth, firestore, storege };

@@ -1,0 +1,36 @@
+.react-datepicker-wrapper{
+    /* width: 80%; */
+    cursor: pointer;
+    color: red;
+   
+}
+.register_Responsive{
+    padding: 20px 30px;
+    width: 500px;
+    margin: 20px auto;
+}
+
+.register_DatePicker{
+    float: left;
+    width: 25%;
+}
+
+@media screen and (max-width: 600px) {
+    .register_Responsive{
+        width: 400px;
+    }
+    .register_DatePicker{
+        width: 40%;
+        margin-right: 10px;
+    }
+  }
+
+  @media screen and (max-width: 450px) {
+    .register_Responsive{
+        width: auto;
+    }
+    .register_DatePicker{
+        width: 50%;
+        margin-right: 10px;
+    }
+  }
