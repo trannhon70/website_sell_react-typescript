@@ -1,19 +1,18 @@
-
-.login_repionsive{
-    padding: 50px 20px;
+.profile{
+    padding: 30px 20px;
     width: 500px;
     margin: 20px auto;
 }
 
 @media screen and (max-width: 600px) {
-    .login_repionsive{
+    .profile{
         width: 400px;
     }
     
   }
 
   @media screen and (max-width: 450px) {
-    .login_repionsive{
+    .profile{
         width: auto;
     }
     

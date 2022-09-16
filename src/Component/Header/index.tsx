@@ -53,7 +53,7 @@ const Header: FC = () => {
   }, [])
 
   const handleSignout = async () => {
-
+    
     localStorage.setItem('user', JSON.stringify(""));
     await updateDoc(doc(firestore as any, "user", auth.currentUser?.uid as any), {
       isOnline: false,
@@ -93,6 +93,10 @@ const Header: FC = () => {
   }
   const id = open ? 'simple-popover' : undefined;
   const id1 = open1 ? 'simple-popover' : undefined;
+
+  // console.log({user});
+  // console.log({data});
+  
   return (
     <Fragment>
       <header className="fixed z-50 w-screen p-3 px-4 md:p-6 md:px-16 bg-primary">

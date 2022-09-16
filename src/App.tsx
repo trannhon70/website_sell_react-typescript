@@ -29,7 +29,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<NotPound />} />
           </Route>
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/:id/admin" element={<Admin />} />
           
         </Routes>
         {/* </main>

@@ -56,18 +56,12 @@ const Register: FC = () => {
         weightRange: '',
         showPassword: false,
     });
-    const { hoTen, email, sdt, diaChi, password, ngaysinh, error } = data
+    const { hoTen, email, sdt, diaChi, password, error } = data
 
 
 
 
-    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
-        navigate("/login");
-    };
+    
 
     const handleCloseFailure = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
@@ -107,6 +101,7 @@ const Register: FC = () => {
         setLoading(true)
         //thêm dữ liệu vào database
         try {
+            
             const result = await createUserWithEmailAndPassword(
                 auth,
                 email,
@@ -119,7 +114,7 @@ const Register: FC = () => {
             );
             const snap = await uploadBytes(imgRef, img);
             const dlUrl = await getDownloadURL(ref(storege, snap.ref.fullPath));
-
+            
             await setDoc(doc(firestore, "user", result.user.uid), {
                 uid: result.user.uid,
                 hoTen,
@@ -131,17 +126,26 @@ const Register: FC = () => {
                 isOnline: true,
                 avatar: dlUrl,
                 avatarPath: snap.ref.fullPath,
-                nguoidung: 'user'
+                nguoidung: 'user',
+                
             });
-
             setOpen(true);
             setLoading(false);
+            
         } catch (err) {
             setOpenFailure(true);
             setLoading(false);
             // setData({ ...data });   
         }
     }
+
+    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+        // navigate("/login");
+    };
 
     //*  thực hiện render lại khi upload hình ảnh lên
     async function changeFile(e: any) {
@@ -154,11 +158,6 @@ const Register: FC = () => {
         // };
     }
 
-
-
-    const avataStyle = { backgroundColor: '#1bbd7e' }
-    const headerStyle = { margin: 0, display: 'flex', justifyContent: 'center', padding: '20px', fontSize: '25px', fontWeight: 600 }
-
     const handleClickShowPassword = () => {
         setValues({
             ...values,
@@ -169,6 +168,11 @@ const Register: FC = () => {
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
+
+    const avataStyle = { backgroundColor: '#1bbd7e' }
+    const headerStyle = { margin: 0, display: 'flex', justifyContent: 'center', padding: '20px', fontSize: '25px', fontWeight: 600 }
+
+    
 
 
     return <Fragment>{user ? <Navigate to="/" /> : <Grid sx={{ minHeight: '788px' }}>
@@ -185,7 +189,6 @@ const Register: FC = () => {
                 <TextField sx={{ paddingBottom: '20px' }} onChange={handleChange} value={email} type="email" name="email" fullWidth label="Email" />
                 <TextField sx={{ paddingBottom: '20px' }} onChange={handleChange} value={sdt} type="number" name="sdt" fullWidth label="Số điện thoại" />
                 <TextField sx={{ paddingBottom: '20px' }} onChange={handleChange} value={diaChi} type="text" name="diaChi" fullWidth label="Địa chỉ" />
-                {/* <TextField sx={{ paddingBottom: '20px' }} onChange={handleChange} value={password} type="password" name="password" fullWidth label="Mật khẩu" /> */}
                 <FormControl sx={{ width: '100%', paddingBottom: '20px' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                     <OutlinedInput
@@ -213,7 +216,6 @@ const Register: FC = () => {
 
                 <div style={{ paddingBottom: '20px', display: 'flex' }}>
                     <div className={registerStyles['register_DatePicker']} >Ngày sinh :</div>
-
                     <DatePicker showYearDropdown
                         dateFormatCalendar="MMMM"
                         yearDropdownItemNumber={100}
@@ -221,27 +223,20 @@ const Register: FC = () => {
                         selected={startDate}
                         onChange={(date: Date) => setStartDate(date)}
                         className={registerStyles['react-datepicker-wrapper']}
-
                     />
-
                 </div>
                 <div style={{ clear: 'both' }}></div>
                 <div style={{ display: 'flex', paddingBottom: '20px' }}>
                     <div className={registerStyles['register_DatePicker']}>
                         Avatar :
                     </div>
-                    {/* <label htmlFor="img"  style={{cursor:'pointer', fontSize:'20px', float:'left', width:'20%'}}>
-                        <BsFillCameraFill style={{color: '#1bbd7e'}} /> 
-                    </label> */}
                     <input
                         name="hinhAnh"
                         id="img"
-                        // style={{ display: "none" }}
                         type="file"
                         accept="image/*"
                         onChange={changeFile}
                     />
-                    {/* <img style={{ paddingBottom:'20px' }} alt={img.name} /> */}
                 </div>
                 <Button sx={{ padding: '10px', fontSize: '20px' }} type="submit" variant="contained" fullWidth color="success" disabled={loading} >{loading ? <Box sx={{ display: 'flex' }}>
                     <CircularProgress color="success" />
